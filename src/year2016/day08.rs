@@ -9,6 +9,7 @@ use crate::util::grid::*;
 use crate::util::iter::*;
 use crate::util::parse::*;
 use crate::util::point::*;
+use crate::util::ocr::*;
 
 pub fn parse(input: &str) -> Vec<Point> {
     let amounts = input.iter_signed::<i32>().chunk::<2>();
@@ -44,10 +45,12 @@ pub fn part1(input: &[Point]) -> usize {
 }
 
 pub fn part2(input: &[Point]) -> String {
-    let mut grid = Grid::new(50, 6, '.');
+    let mut grid = Grid::new(51, 6, '.');
 
     (0..6).for_each(|y| grid[Point::new(0, y)] = '\n');
     input.iter().for_each(|&p| grid[p + RIGHT] = '#');
 
-    grid.bytes.iter().collect()
+    let answer : String = grid.bytes.iter().collect();
+
+    scan_5x6(&answer)
 }

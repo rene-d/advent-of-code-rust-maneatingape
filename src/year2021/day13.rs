@@ -12,6 +12,7 @@
 use crate::util::grid::*;
 use crate::util::hash::*;
 use crate::util::iter::*;
+use crate::util::ocr::*;
 use crate::util::parse::*;
 use crate::util::point::*;
 
@@ -69,7 +70,8 @@ pub fn part2(input: &Input) -> String {
     }
 
     (0..height).for_each(|y| grid[Point::new(0, y)] = '\n');
-    grid.bytes.iter().collect()
+    let answer: String = grid.bytes.iter().collect();
+    scan_5x6(&answer)
 }
 
 #[inline]

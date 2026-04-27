@@ -1,5 +1,6 @@
 //! # Cathode-Ray Tube
 use crate::util::parse::*;
+use crate::util::ocr::*;
 
 /// Tokenizes the input treating both "noop" and "addx" as no-ops to obtain the correct
 /// instruction timing. Produces a `vec` of the absolute values of `x` from cycle 0 to 241.
@@ -35,5 +36,5 @@ pub fn part2(input: &[i32]) -> String {
         }
     }
 
-    result
+    scan_5x6(&result)
 }

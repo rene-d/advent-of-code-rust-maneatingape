@@ -3,6 +3,7 @@ use crate::util::grid::*;
 use crate::util::iter::*;
 use crate::util::parse::*;
 use crate::util::point::*;
+use crate::util::ocr::*;
 
 type Input = (String, i32);
 
@@ -47,8 +48,8 @@ pub fn parse(input: &str) -> Input {
     (message, time)
 }
 
-pub fn part1(input: &Input) -> &str {
-    &input.0
+pub fn part1(input: &Input) -> String {
+    scan_6x10(&input.0)
 }
 
 pub fn part2(input: &Input) -> i32 {

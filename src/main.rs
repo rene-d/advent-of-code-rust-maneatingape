@@ -48,6 +48,7 @@ fn main() {
 fn run_solution((stars, duration): (u32, Duration), solution: &Solution) -> (u32, Duration) {
     let Solution { year, day, wrapper } = solution;
     let path = format!("input/year{year}/day{day:02}.txt");
+    let path_answer = format!("input/year{year}/answer{day:02}.txt");
 
     if let Ok(data) = read_to_string(&path) {
         let instant = Instant::now();
@@ -57,8 +58,29 @@ fn run_solution((stars, duration): (u32, Duration), solution: &Solution) -> (u32
         println!("{BOLD}{YELLOW}{year} Day {day}{RESET}");
         println!("    Part 1: {part1}");
         println!("    Part 2: {part2}");
+        println!("    Duration: {elapsed:?}");
 
-        (stars + 2, duration + elapsed)
+        let new_stars = if let Ok(answer) = read_to_string(&path_answer) {
+            let ll = answer.lines().collect::<Vec<_>>();
+
+            if ll.len() == 2 && ll[0] == part1 && ll[1] == part2 {
+                println!("    Status: {GREEN}Success{RESET}");
+                2
+            } else if ll.len() == 1 && ll[0] == part1 && part2 == "n/a" {
+                println!("    Status: {GREEN}Success{RESET}");
+                2
+            } else {
+                println!(
+                    "    Status: {RED}Fail{RESET} ({year}:{day} expects: {})",
+                    answer.trim_ascii_end().replace('\n', " ")
+                );
+                0
+            }
+        } else {
+            2
+        };
+
+        (stars + new_stars, duration + elapsed)
     } else {
         eprintln!("{BOLD}{RED}{year} Day {day}{RESET}");
         eprintln!("    Missing input!");

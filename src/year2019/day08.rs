@@ -1,4 +1,6 @@
 //! # Space Image Format
+use crate::util::ocr::*;
+
 const WIDTH: usize = 25;
 const HEIGHT: usize = 6;
 const LAYER_SIZE: usize = WIDTH * HEIGHT;
@@ -50,5 +52,5 @@ pub fn part2(input: &[u8]) -> String {
         }
     }
 
-    result
+    scan_5x6(&result)
 }

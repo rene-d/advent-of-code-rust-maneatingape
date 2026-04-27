@@ -4,6 +4,7 @@
 use super::intcode::*;
 use crate::util::grid::*;
 use crate::util::hash::*;
+use crate::util::ocr::*;
 use crate::util::parse::*;
 use crate::util::point::*;
 
@@ -30,13 +31,14 @@ pub fn part2(input: &[i64]) -> String {
     // Convert panels to characters.
     let width = x2 - x1 + 2; // Leave room for newline character.
     let height = y2 - y1 + 1;
-    let mut grid = Grid::new(width, height, '.');
+    let mut grid = Grid::new(width+1, height, '.');
 
     let offset = Point::new(x1 - 1, y1);
     panels.iter().for_each(|&point| grid[point - offset] = '#');
     (0..height).for_each(|y| grid[Point::new(0, y)] = '\n');
 
-    grid.bytes.iter().collect()
+    let answer: String = grid.bytes.iter().collect();
+    scan_5x6(&answer)
 }
 
 fn paint(input: &[i64], initial: i64) -> FastMap<Point, i64> {
